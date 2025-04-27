@@ -40,13 +40,14 @@
             width: 100%;
             direction: rtl; /* ডান থেকে বাম লেখা */
             margin-top: 20px;
-            table-layout: fixed; /* টেবিলের কলাম সাইজ নির্ধারণ করবে */
+            table-layout: auto; /* স্বাভাবিক লেআউট ব্যবহারের জন্য পরিবর্তন */
         }
 
         th, td {
             border: 1px solid #ddd;
             padding: 12px;
             text-align: center;
+            word-wrap: break-word; /* কন্টেন্ট বেশি হলে সেলটি ব্রেক হবে */
         }
 
         th {
@@ -68,13 +69,13 @@
             background-color: #e9e9e9;
         }
 
-        /* এখানে কলাম গুলোর সাইজ নির্ধারণ করা হলো */
+        /* কলাম সাইজ */
         th:nth-child(1), td:nth-child(1) {
-            width: 5%; /* প্রথম কলাম */
+            width: 15%; /* প্রথম কলাম */
         }
 
         th:nth-child(2), td:nth-child(2) {
-            width: 20%; /* দ্বিতীয় কলাম */
+            width: 25%; /* দ্বিতীয় কলাম */
         }
 
         th:nth-child(3), td:nth-child(3) {
@@ -112,7 +113,7 @@
                 <th>অফিস/বিভাগ</th>
                 <th>বরাদ্দ (টাকা)</th>
                 <th>ব্যয় (টাকা)</th>
-                <th>(%)</th>
+                <th>অগ্রগতি (%)</th>
             </tr>
         </thead>
         <tbody>
