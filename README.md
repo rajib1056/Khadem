@@ -1,131 +1,139 @@
+from flask import Flask, render_template, request, redirect, url_for
+import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
+
+app = Flask(__name__)
+
+# SQLite ডাটাবেস সেটআপ
+def init_db():
+    conn = sqlite3.connect('monitoring_system.db')
+    c = conn.cursor()
+    # Users Table
+    c.execute('''CREATE TABLE IF NOT EXISTS users (
+                 id INTEGER PRIMARY KEY,
+                 username TEXT UNIQUE NOT NULL,
+                 password TEXT NOT NULL)''')
+    # Institutions Table
+    c.execute('''CREATE TABLE IF NOT EXISTS institutions (
+                 id INTEGER PRIMARY KEY,
+                 name TEXT NOT NULL,
+                 description TEXT,
+                 staff_id INTEGER)''')
+    # Transactions Table
+    c.execute('''CREATE TABLE IF NOT EXISTS transactions (
+                 id INTEGER PRIMARY KEY,
+                 institution_id INTEGER,
+                 transaction_type TEXT NOT NULL,
+                 amount REAL NOT NULL,
+                 transaction_date TEXT NOT NULL,
+                 comments TEXT)''')
+    conn.commit()
+    conn.close()
+
+init_db()
+
+@app.route('/')
+def home():
+    conn = sqlite3.connect('monitoring_system.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM institutions")
+    institutions = c.fetchall()
+    conn.close()
+    return render_template('home.html', institutions=institutions)
+
+@app.route('/add_institution', methods=['GET', 'POST'])
+def add_institution():
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        staff_id = request.form['staff_id']
+
+        conn = sqlite3.connect('monitoring_system.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO institutions (name, description, staff_id) VALUES (?, ?, ?)",
+                  (name, description, staff_id))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('home'))
+
+    return render_template('add_institution.html')
+
+@app.route('/add_transaction/<int:institution_id>', methods=['GET', 'POST'])
+def add_transaction(institution_id):
+    if request.method == 'POST':
+        transaction_type = request.form['transaction_type']
+        amount = request.form['amount']
+        transaction_date = request.form['transaction_date']
+        comments = request.form['comments']
+
+        conn = sqlite3.connect('monitoring_system.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO transactions (institution_id, transaction_type, amount, transaction_date, comments) VALUES (?, ?, ?, ?, ?)",
+                  (institution_id, transaction_type, amount, transaction_date, comments))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('home'))
+
+    return render_template('add_transaction.html', institution_id=institution_id)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>প্রতিষ্ঠান মনিটরিং সিস্টেম</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-        }
-        .header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .container {
-            margin-top: 20px;
-        }
-        .card {
-            margin-bottom: 20px;
-        }
-        .footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-            position: absolute;
-            width: 100%;
-            bottom: 0;
-        }
-    </style>
+    <title>প্রতিষ্ঠান তালিকা</title>
 </head>
 <body>
-
-    <!-- Header Section -->
-    <div class="header">
-        <h1>প্রতিষ্ঠান মনিটরিং সিস্টেম</h1>
-    </div>
-
-    <!-- Main Container -->
-    <div class="container">
-        <div class="row">
-            <!-- Institution List Section -->
-            <div class="col-md-6">
-                <h3>প্রতিষ্ঠান তালিকা</h3>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action">ধনুয়া উত্তর পাড়া</a>
-                    <a href="#" class="list-group-item list-group-item-action">গাজীপুর পূর্ব পাড়া</a>
-                    <a href="#" class="list-group-item list-group-item-action">কাচিনা</a>
-                    <a href="#" class="list-group-item list-group-item-action">খন্দকার পাড়া</a>
-                    <!-- Add More Institutions -->
-                </div>
-            </div>
-
-            <!-- Monitoring Staff Section -->
-            <div class="col-md-6">
-                <h3>মনিটরিং খাদেম পোর্টাল</h3>
-                <form id="login-form">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">ইউজারনেম</label>
-                        <input type="text" class="form-control" id="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">পাসওয়ার্ড</label>
-                        <input type="password" class="form-control" id="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">লগইন</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Transaction Record Section -->
-            <div class="col-md-12">
-                <h3>লেনদেন রেকর্ড</h3>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>প্রতিষ্ঠান</th>
-                            <th>লেনদেনের তারিখ</th>
-                            <th>পরিমাণ</th>
-                            <th>বর্ণনা</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>প্রতিষ্ঠান ১</td>
-                            <td>০১-০৫-২০২৫</td>
-                            <td>৳১০০০</td>
-                            <td>বিক্রয় লেনদেন</td>
-                        </tr>
-                        <tr>
-                            <td>প্রতিষ্ঠান ২</td>
-                            <td>০২-০৫-২০২৫</td>
-                            <td>৳৫০০</td>
-                            <td>ব্যয়</td>
-                        </tr>
-                        <!-- Add More Transactions -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer Section -->
-    <div class="footer">
-        <p>&copy; 2025 প্রতিষ্ঠান মনিটরিং সিস্টেম | সকল অধিকার সংরক্ষিত</p>
-    </div>
-
-    <!-- JavaScript for form validation -->
-    <script>
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
-            
-            if (username === '' || password === '') {
-                alert('অনুগ্রহ করে সব ফিল্ড পূরণ করুন');
-            } else {
-                alert('লগইন সফল');
-            }
-        });
-    </script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <h2>প্রতিষ্ঠান তালিকা</h2>
+    <ul>
+        {% for institution in institutions %}
+            <li>{{ institution[1] }} - <a href="{{ url_for('add_transaction', institution_id=institution[0]) }}">লেনদেন যোগ করুন</a></li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('add_institution') }}">নতুন প্রতিষ্ঠান যোগ করুন</a>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>নতুন প্রতিষ্ঠান যোগ করুন</title>
+</head>
+<body>
+    <h2>নতুন প্রতিষ্ঠান যোগ করুন</h2>
+    <form method="POST">
+        <label for="name">প্রতিষ্ঠানের নাম:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="description">বর্ণনা:</label>
+        <input type="text" id="description" name="description" required><br><br>
+
+        <label for="staff_id">মনিটরিং খাদেমের আইডি:</label>
+        <input type="number" id="staff_id" name="staff_id" required><br><br>
+
+        <button type="submit">যো
+
+গ করুন</button>
+    </form>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লেনদেন যোগ করুন</title>
+</head>
+<body>
+    <h2>লেনদেন যোগ করুন</h2>
+    <form method="POST">
+        <label for="transaction_type">লেনদেনের ধরন:</label>
+        <input type="text" id="transaction_type" name="transaction_type" required><br><br>
+
+        <label for="amount">পরিমাণ:</label>
+        <input type="number" id="amount" name="amount" required><br><br>
+
+        <
