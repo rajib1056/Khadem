@@ -69,11 +69,11 @@
 
         /* এখানে কলাম গুলোর সাইজ নির্ধারণ করা হলো */
         th:nth-child(1), td:nth-child(1) {
-            width: 15%; /* প্রথম কলাম */
+            width: 8%; /* প্রথম কলাম */
         }
 
         th:nth-child(2), td:nth-child(2) {
-            width: 40%; /* দ্বিতীয় কলাম */
+            width: 50%; /* দ্বিতীয় কলাম */
         }
 
         th:nth-child(3), td:nth-child(3) {
