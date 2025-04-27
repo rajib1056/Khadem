@@ -47,10 +47,10 @@
             <div class="col-md-6">
                 <h3>প্রতিষ্ঠান তালিকা</h3>
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action">প্রতিষ্ঠান ১</a>
-                    <a href="#" class="list-group-item list-group-item-action">প্রতিষ্ঠান ২</a>
-                    <a href="#" class="list-group-item list-group-item-action">প্রতিষ্ঠান ৩</a>
-                    <a href="#" class="list-group-item list-group-item-action">প্রতিষ্ঠান ৪</a>
+                    <a href="#" class="list-group-item list-group-item-action">ধনুয়া উত্তর পাড়া</a>
+                    <a href="#" class="list-group-item list-group-item-action">গাজীপুর পূর্ব পাড়া</a>
+                    <a href="#" class="list-group-item list-group-item-action">কাচিনা</a>
+                    <a href="#" class="list-group-item list-group-item-action">খন্দকার পাড়া</a>
                     <!-- Add More Institutions -->
                 </div>
             </div>
