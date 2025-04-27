@@ -2,144 +2,130 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>ছক ফরম্যাট</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রতিষ্ঠান মনিটরিং সিস্টেম</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
         }
-
-        .container {
-            width: 80%;
-            background-color: white;
+        .header {
+            background-color: #4CAF50;
+            color: white;
             padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        h2 {
             text-align: center;
-            font-size: 24px;
-            color: #333;
         }
-
-        p {
-            text-align: center;
-            font-size: 18px;
-            color: #666;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            direction: rtl; /* ডান থেকে বাম লেখা */
+        .container {
             margin-top: 20px;
-            table-layout: auto; /* স্বাভাবিক লেআউট ব্যবহারের জন্য পরিবর্তন */
         }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-            word-wrap: break-word; /* কন্টেন্ট বেশি হলে সেলটি ব্রেক হবে */
+        .card {
+            margin-bottom: 20px;
         }
-
-        th {
-            background-color: #f4f4f4;
-            font-size: 18px;
-            color: #333;
-        }
-
-        td {
-            font-size: 16px;
-            color: #555;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        tr:hover {
-            background-color: #e9e9e9;
-        }
-
-        /* কলাম সাইজ */
-        th:nth-child(1), td:nth-child(1) {
-            width: 15%; /* প্রথম কলাম */
-        }
-
-        th:nth-child(2), td:nth-child(2) {
-            width: 25%; /* দ্বিতীয় কলাম */
-        }
-
-        th:nth-child(3), td:nth-child(3) {
-            width: 20%; /* তৃতীয় কলাম */
-        }
-
-        th:nth-child(4), td:nth-child(4) {
-            width: 20%; /* চতুর্থ কলাম */
-        }
-
-        th:nth-child(5), td:nth-child(5) {
-            width: 20%; /* পঞ্চম কলাম */
-        }
-
         .footer {
             text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
-            color: #888;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
         }
-
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>আর্থিক বছরের প্রকল্পের ভৌত ও আর্থিক অগ্রগতির বিবরণী</h2>
-    <p>প্রকল্পের নাম: __________________________</p>
-    <p>অর্থ বছর: __________________________</p>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ক্রমিক নং</th>
-                <th>অফিস/বিভাগ</th>
-                <th>বরাদ্দ (টাকা)</th>
-                <th>ব্যয় (টাকা)</th>
-                <th>অগ্রগতি (%)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- এখানে তোমার প্রয়োজন অনুযায়ী সারি (row) যোগ করা যাবে -->
-            <tr>
-                <td>১</td>
-                <td>অফিস/বিভাগের নাম</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>২</td>
-                <td>অফিস/বিভাগের নাম</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <!-- আরো সারি যুক্ত করতে চাইলে একইভাবে কপি করে নিতে পারো -->
-        </tbody>
-    </table>
-
-    <div class="footer">
-        <p>© 2025 প্রকল্পের তথ্য</p>
+    <!-- Header Section -->
+    <div class="header">
+        <h1>প্রতিষ্ঠান মনিটরিং সিস্টেম</h1>
     </div>
-</div>
 
+    <!-- Main Container -->
+    <div class="container">
+        <div class="row">
+            <!-- Institution List Section -->
+            <div class="col-md-6">
+                <h3>প্রতিষ্ঠান তালিকা</h3>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">প্রতিষ্ঠান ১</a>
+                    <a href="#" class="list-group-item list-group-item-action">প্রতিষ্ঠান ২</a>
+                    <a href="#" class="list-group-item list-group-item-action">প্রতিষ্ঠান ৩</a>
+                    <a href="#" class="list-group-item list-group-item-action">প্রতিষ্ঠান ৪</a>
+                    <!-- Add More Institutions -->
+                </div>
+            </div>
+
+            <!-- Monitoring Staff Section -->
+            <div class="col-md-6">
+                <h3>মনিটরিং খাদেম পোর্টাল</h3>
+                <form id="login-form">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">ইউজারনেম</label>
+                        <input type="text" class="form-control" id="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">পাসওয়ার্ড</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">লগইন</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Transaction Record Section -->
+            <div class="col-md-12">
+                <h3>লেনদেন রেকর্ড</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>প্রতিষ্ঠান</th>
+                            <th>লেনদেনের তারিখ</th>
+                            <th>পরিমাণ</th>
+                            <th>বর্ণনা</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>প্রতিষ্ঠান ১</td>
+                            <td>০১-০৫-২০২৫</td>
+                            <td>৳১০০০</td>
+                            <td>বিক্রয় লেনদেন</td>
+                        </tr>
+                        <tr>
+                            <td>প্রতিষ্ঠান ২</td>
+                            <td>০২-০৫-২০২৫</td>
+                            <td>৳৫০০</td>
+                            <td>ব্যয়</td>
+                        </tr>
+                        <!-- Add More Transactions -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>&copy; 2025 প্রতিষ্ঠান মনিটরিং সিস্টেম | সকল অধিকার সংরক্ষিত</p>
+    </div>
+
+    <!-- JavaScript for form validation -->
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            
+            if (username === '' || password === '') {
+                alert('অনুগ্রহ করে সব ফিল্ড পূরণ করুন');
+            } else {
+                alert('লগইন সফল');
+            }
+        });
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
